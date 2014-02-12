@@ -27,3 +27,20 @@ http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&reque
 - CQL Filter/Query (CQL_FILTER)
 - Limit records/features returned (maxfeatures)
 
+
+---
+###URL 3 - get map image of GoGet pods in Sydney (WMFS)
+
+http://goget.ianscrivener.com:8080/geoserver/goget/wms?service=WMS&version=1.1.0&request=GetMap&layers=goget:pods&styles=&width=512&height=369&srs=EPSG:4326&format=image/svg+xml&bbox=151.09028579075,-33.947852301991,151.3157818845,-33.785336562551
+
+**Demonstrates:**
+
+- geo-json (JSONP)
+- Bounding Box (BBOX)
+
+
+AJKnXv84fjrb0KIHawS0Tg
+---
+### URL 4 - HERE map of Sydney
+
+http://image.maps.cit.api.here.com/mia/1.6/mapview?app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg&nord=&c=-33.869059029843946%2C151.1875109355978&z=11&w=800&h=500&f=1

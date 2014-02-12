@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+    <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+  <![endif]-->
+    <style type="text/css">
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    html, body, #myMap {
+        height: 100%;
+    }
+    </style>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <body>
+        <div id="myMap"></div>
+        <script>
+
+//          http://2.aerial.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/11/1202/843/256/png8?app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg
+//          http://2.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/satellite.day/12/3765/2456/256/png?app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg
+hereURL = 'http://2.base.maps.cit.api.here.com/maptile/2.1/maptile/newest/normal.day/{z}/{x}/{y}/256/png?app_id=DemoAppId01082013GAL&app_code=AJKnXv84fjrb0KIHawS0Tg';
+
+
+
+        var myMapTiles = L.tileLayer(hereURL, {
+            maxZoom: 18
+        });
+/*
+        var myMapTiles = L.tileLayer('http://a.tiles.mapbox.com/v3/lyzidiamond.map-ietb6srb/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        });
+*/
+         // define the geoserver geojson url
+
+         //fails
+        var geoJsonUrl = "http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=goget:pods&outputFormat=text/javascript&BBOX=141,-37.5,154,-28";
+
+         // works, but soe data has bvad states
+        var geoJsonUrl = "http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=goget:pods&outputFormat=text/javascript&CQL_FILTER=state='NSW' AND Pod_ID<>1164";
+
+         // json handler funct
+
+        function fixJSON(data) {
+            for (var i = 0; i < data.features.length; i++) {
+                elem = data.features[i].geometry.coordinates;
+                elem.reverse();
+            };
+            makeMap(data)
+        }
+
+         // ajax call to get json
+        $.ajax({
+            url: geoJsonUrl,
+            dataType: 'jsonp',
+            jsonpCallback: 'parseResponse',
+            success: fixJSON
+        })
+
+         // json handler funct
+        function makeMap(data) {
+//            console.log('typeof: ', typeof data);
+//            console.log('length: ', data.features.length);
+//            console.log('coordinates: ', data.features[0].geometry.coordinates);
+            $('pre').text(JSON.stringify(data));
+            var geojson = L.geoJson(data, {
+                onEachFeature: function(feature, layer) {
+                    var str = feature.properties.area_name + ' (' + feature.properties.Pod_ID + ')';
+                    layer.bindPopup(str);
+                    //console.log("feature", feature.geometry.coordinates);
+                }
+            });
+//            var map = L.map('myMap').fitBounds(geojson.getBounds());
+            var map = L.map('myMap',{
+//                center: [-33.89528102385275,151.1813311260275],
+                center: [-33.8700,151.1945],
+                zoom: 16
+            });
+            myMapTiles.addTo(map);
+            geojson.addTo(map);
+        }
+
+        </script>
+    </body>
+
+</html>

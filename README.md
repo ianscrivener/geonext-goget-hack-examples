@@ -43,6 +43,14 @@ http://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html
 **Styling with CSS:**
 http://docs.geoserver.org/latest/en/user/extensions/css/tutorial.html
 
+**Nokia HERE Map API**
+
+Map Image Wizard - http://developer.here.com/apiexplorer/examples/api-for-rest/getting-started/basic-map-wh.html
+
+Map Tile API Docs - https://developer.here.com/rest-apis/documentation/enterprise-map-tile/topics/resource-map-tile.html
+
+
+
 
 ---
 ###Javascript SDKs
