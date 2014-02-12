@@ -32,6 +32,8 @@ https://github.com/ianscrivener/geonext-goget-hack-examples/tree/gh-pages/exampl
 **Overview:**
 - HERE Map Tiles
 - Leaflet
+- Custom CSS styled point marker
 - Jquery to get JSONP
 - GoGet Pod data from Geoserver (geo-json)
 - Spatial filter using CQL
+- 
