@@ -1,45 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+    <!--[if lte IE 8]>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.ie.css" />
+  <![endif]-->
     <style type="text/css">
-    pre {
-        white-space: pre-wrap;
-        white-space: -moz-pre-wrap;
-        white-space: -pre-wrap;
-        white-space: -o-pre-wrap;
-        word-wrap: break-word;
+    body {
+        padding: 0;
+        margin: 0;
+    }
+    html, body, #myMap {
+        height: 100%;
     }
     </style>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 
+    <body>
+        <div id="myMap"></div>
+        <script>
+        var myMapTiles = L.tileLayer('http://a.tiles.mapbox.com/v3/lyzidiamond.map-ietb6srb/{z}/{x}/{y}.png', {
+            maxZoom: 18
+        });
 
-    <title>GeoNext GoGet Hack Example #1</title>
-</head>
+         // define the geoserver geojson url
 
-<body>
+         //fails
+        var geoJsonUrl = "http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=goget:pods&outputFormat=text/javascript&BBOX=141,-37.5,154,-28";
 
-    <p>Processing...</p>
-    <pre></pre>
+         // works, but soe data has bvad states
+        var geoJsonUrl = "http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=goget:pods&outputFormat=text/javascript&CQL_FILTER=state='NSW' AND Pod_ID<>1164";
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script>
-	    var geoJsonUrl = "http://goget.ianscrivener.com:8080/geoserver/ows?service=WFS&version=1.1.0&request=GetFeature&typeName=goget:pods&maxfeatures=1&outputFormat=text/javascript";
+         // json handler funct
 
-	    function handleJson(data) {
-	        $('p').html("Done!!");
-	        $('pre').text(JSON.stringify(data));
-	        console.log(data)
-	    }
+        function fixJSON(data) {
+            for (var i = 0; i < data.features.length; i++) {
+                elem = data.features[i].geometry.coordinates;
+                elem.reverse();
+            };
+            makeMap(data)
+        }
 
-	    $.ajax({
+         // ajax call to get json
+        $.ajax({
+            url: geoJsonUrl,
+            dataType: 'jsonp',
+            jsonpCallback: 'parseResponse',
+            success: fixJSON
+        })
 
-	        url: geoJsonUrl,
-	        dataType: 'jsonp',
-	        jsonpCallback: 'parseResponse',
-	        success: handleJson
-	    })
+         // json handler funct
+        function makeMap(data) {
+//            console.log('typeof: ', typeof data);
+//            console.log('length: ', data.features.length);
+//            console.log('coordinates: ', data.features[0].geometry.coordinates);
+            $('pre').text(JSON.stringify(data));
+            var geojson = L.geoJson(data, {
+                onEachFeature: function(feature, layer) {
+                    var str = feature.properties.area_name + ' (' + feature.properties.Pod_ID + ')';
+                    layer.bindPopup(str);
+                    //console.log("feature", feature.geometry.coordinates);
+                }
+            });
+            var map = L.map('myMap').fitBounds(geojson.getBounds());
+            myMapTiles.addTo(map);
+            geojson.addTo(map);
+        }
 
-    < /script>
+        </script>
+    </body>
 
-</body > < /html>
+</html>
