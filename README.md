@@ -1,11 +1,13 @@
 #GeoNext GoGet Hack Examples
 
 
-**[See URL Examples](https://github.com/ianscrivener/geonext-goget-hack-examples/blob/gh-pages/example-urls.md "")**
+**[See many Geoserver URL examples here](https://github.com/ianscrivener/geonext-goget-hack-examples/blob/gh-pages/example-urls.md "")**
 
+
+**[See many Code examples here](https://github.com/ianscrivener/geonext-goget-hack-examples/blob/gh-pages/code-examples.md "")**
 
 ---
-##GeoNext/GoGet Hack Geoserver
+###GeoNext/GoGet Hack Geoserver
 
 **Base URL:** http://goget.ianscrivener.com:8080/
 
@@ -15,7 +17,7 @@
 
 
 ---
-##Web Mapping Links
+###Web Mapping Links
 
 **Geoserver** - the map server we use - http://geoserver.org/ 
 
@@ -24,7 +26,7 @@
 **GDAL** - a multiplatform a translator library for raster geospatial data formats - http://www.gdal.org/
 
 ---
-##Documentation Pointers
+###Documentation Pointers
 
 **WMS - Web Map Service:** - to get map image files (png, gif, jpg)
 http://en.wikipedia.org/wiki/Web_Map_Service
@@ -43,7 +45,7 @@ http://docs.geoserver.org/latest/en/user/extensions/css/tutorial.html
 
 
 ---
-##Javascript SDKs
+###Javascript SDKs
 
 **Leafletjs** - http://leafletjs.com/ ~ http://leafletjs.com/reference.html
 
