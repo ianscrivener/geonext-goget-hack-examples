@@ -19,6 +19,7 @@ https://github.com/ianscrivener/geonext-goget-hack-examples/tree/gh-pages/exampl
 
 
 
+
 --
 ###Example 2
 
@@ -36,4 +37,22 @@ https://github.com/ianscrivener/geonext-goget-hack-examples/tree/gh-pages/exampl
 - Jquery to get JSONP
 - GoGet Pod data from Geoserver (geo-json)
 - Spatial filter using CQL
-- 
+
+--
+###Example 3
+
+**Demo:** 
+http://ianscrivener.com/geonext-goget-hack-examples/example3/
+
+**Code:**
+https://github.com/ianscrivener/geonext-goget-hack-examples/tree/gh-pages/example3
+
+
+**Overview:**
+- display suburbs using geo-json
+- HERE Map Tiles
+- Leaflet
+- Custom CSS styled point marker
+- Jquery to get JSONP
+- GoGet Pod data from Geoserver (geo-json)
+- Spatial filter using CQL
